@@ -10,6 +10,7 @@ console.log('router loaded');
 router.get('/',homeController.home);
 
 //if there is users after / then go to the neighbour 
+//first create required .ejs view. Then setup the controller action. In the last set the route and render. 
 router.use('/users',require('./users'));
 
 // for any further routes access from here (router.use('/', ___))
