@@ -7,9 +7,9 @@ const db=require('./config/mongoose');
 const session=require('express-session');
 const passport = require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-const { populate } = require('./models/user');
+// const { populate } = require('./models/user');
 const MongoStore=require('connect-mongo')(session);
-const { default: mongoose } = require('mongoose');
+// const { default: mongoose } = require('mongoose');
 const sassMiddleware=require('node-sass-middleware');
 app.use(sassMiddleware({
     src:'./assets/scss',

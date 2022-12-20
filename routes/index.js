@@ -15,5 +15,7 @@ router.use('/users',require('./users'));
 
 // for any further routes access from here (router.use('/', ___))
 
+router.use('/posts',require('./posts'));
+
 module.exports=router; 
  
