@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express=require('express');
 
 const router= express.Router();
@@ -16,6 +17,7 @@ router.use('/users',require('./users'));
 // for any further routes access from here (router.use('/', ___))
 
 router.use('/posts',require('./posts'));
+router.use('/comments',require('./comments'));
 
 module.exports=router; 
- 
+  

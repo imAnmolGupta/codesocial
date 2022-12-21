@@ -11,6 +11,14 @@ const postSchema=new mongoose.Schema({
         ref:'User'
   
     },
+    //include arrays of ids of all comments in this post Schema itself
+    //array makes comment fetch fast on posts
+    comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Comment'
+        }
+    ]
 },{
         timestamps:true
 });
@@ -19,4 +27,4 @@ const Post=mongoose.model('Post',postSchema);
 
 module.exports=Post;
 
- 
+  
