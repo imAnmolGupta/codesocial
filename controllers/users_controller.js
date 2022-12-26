@@ -60,11 +60,20 @@ module.exports.create=function(req,res){
 }
 //for sing in data
 module.exports.createSession=function(req,res){
+    req.flash('success','Logged in successfullly');
     return res.redirect('/');    
 }  
+// module.exports.destroySession = function(req, res){
+//     req.logout();
+//     req.flash('success','Logged out successfullly');
+//     return res.redirect('/');
+// }
 module.exports.destroySession=function(req,res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect('/');
-      });
+        else{
+            req.flash('success','Logged out successfullly');
+            res.redirect('/');
+        }
+    });
 }

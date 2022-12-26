@@ -11,6 +11,9 @@ const passportLocal=require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo')(session);
 // const { default: mongoose } = require('mongoose');
 const sassMiddleware=require('node-sass-middleware');
+const flash= require('connect-flash');
+const customMware=require('./config/middleware');
+
 app.use(sassMiddleware({
     src:'./assets/scss',
     dest:'./assets/css',
@@ -65,6 +68,9 @@ app.use(passport.session());
 //to check whether a session cookie is present or not
 app.use(passport.setAuthenticatedUser);
 
+app.use(flash());
+app.use(customMware.setFlash);
+
 //any requests coming in will require the index of routes.
 app.use('/',require('./routes'));
 
@@ -77,3 +83,4 @@ app.listen(port,function(err){
 
     console.log(`Server is running on port:${port}`);
 })  
+ 
