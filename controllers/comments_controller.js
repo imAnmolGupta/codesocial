@@ -25,7 +25,7 @@ module.exports.create = async function(req, res){
     
 }
 
-module.exports.destroy = async function(req, res){
+module.exports.destroy = async function(req, res){ 
 
     try{
         let comment = await Comment.findById(req.params.id);
@@ -47,4 +47,4 @@ module.exports.destroy = async function(req, res){
         return;
     }
     
-}
+} 
