@@ -10,20 +10,34 @@ const passportLocal=require('./config/passport-local-strategy');
 const passportJWT=require('./config/passport-jwt-strategy');
 const passportGoogle=require('./config/passport-google-oauth2-strategy');
 // const { populate } = require('./models/user');
-const MongoStore=require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 // const { default: mongoose } = require('mongoose');
-const sassMiddleware=require('node-sass-middleware');
+const sass = require('sass');
+const fs = require('fs');
+const path = require('path');
 const flash= require('connect-flash');
 const customMware=require('./config/middleware');
 
-app.use(sassMiddleware({
-    src:'./assets/scss',
-    dest:'./assets/css',
-    debug:true,
-    outputStyle:'extended',
-    prefix:'/css'
-}));  
- 
+// Compile SCSS to CSS
+const scssPath = './assets/scss';
+const cssPath = './assets/css';
+
+// Ensure CSS directory exists
+if (!fs.existsSync(cssPath)) {
+    fs.mkdirSync(cssPath, { recursive: true });
+}
+
+// Compile all SCSS files
+fs.readdirSync(scssPath).forEach(file => {
+    if (file.endsWith('.scss')) {
+        const result = sass.compile(path.join(scssPath, file));
+        fs.writeFileSync(
+            path.join(cssPath, file.replace('.scss', '.css')),
+            result.css
+        );
+    }
+});
+
 app.use(express.urlencoded());
 
 app.use(cookieParser());
@@ -54,15 +68,10 @@ app.use(session({
     cookie:{
         maxAge:(1000 * 60 * 100)
     },
-    store:new MongoStore(
-        {
-            mongooseConnection:db,
-            autoRemove:'disabled'
-        },
-        function(err){
-            console.log(err || 'connect-mongodb setup ok ');
-        }
-    )
+    store: MongoStore.create({
+        mongoUrl: 'mongodb://127.0.0.1:27017/codesocial_development',
+        autoRemove: 'disabled'
+    })
 }));
  
 
